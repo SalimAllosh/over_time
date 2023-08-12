@@ -1,0 +1,214 @@
+
+//-------------------------------------
+
+CREATE TABLE Institutes(
+  Institutes_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  Institute_Name TEXT NOT NULL, 
+  Institute_Location TEXT,
+  Institute_Balance REAL
+);
+
+//-----------------------------
+
+CREATE TABLE subjects(
+  Subject_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  Subject_Name TEXT NOT NULL , 
+  Subject_Description TEXT  
+);
+
+//---------------------------------
+CREATE TABLE Student(
+  Student_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  Student_Name TEXT NOT NULL , 
+  Student_Notes TEXT  
+);
+
+//---------------------------------------
+
+CREATE TABLE Courses(
+  Course_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  Institutes_Id INTEGER,
+  Subject_Id INTEGER,
+  Student_Id INTEGER ,
+  Start_Date DATE NOT NULL ,
+  End_Date DATE , 
+  Course_Type TEXT NOT NULL , 
+  Hourly_Rate REAL NOT NULL,
+  Student_Name TEXT NOT NULL , 
+  Student_Notes TEXT ,
+  Course_Duration REAL ,
+  Sessions_Number INTEGER,
+  Total REAL , 
+  FOREIGN KEY (Institutes_Id) REFERENCES Institutes(Institutes_Id),
+  FOREIGN KEY (Subject_Id) REFERENCES Subjects (Subject_Id),
+  FOREIGN KEY (Student_Id) REFERENCES Student (Student_Id)
+);
+
+//-------------------------------
+
+CREATE TABLE Payments(
+Payment_Id INTEGER PRIMARY KEY AUTOINCREMENT,
+Institute_Id INTEGER,
+Payment_Date DATE NOT NULL,
+Payment_Amount REAL NOT NULL , 
+FOREIGN KEY (Institute_Id) REFERENCES Institutes(Institute_Id)
+);
+
+//------------------------------------
+
+-- Insert data into Institutes table
+INSERT INTO Institutes (Institute_Name, Institute_Location, Institute_Balance)
+VALUES
+    ('ABC Institute', 'City A', 50000.00),
+    ('XYZ Academy', 'City B', 75000.00),
+    ('123 School', 'City C', 30000.00);
+
+//-------------------------------------
+-- Insert data into Subjects table
+INSERT INTO Subjects (Subject_Name, Subject_Description)
+VALUES
+    ('Mathematics', 'Algebra, Geometry, Calculus'),
+    ('Science', 'Physics, Chemistry, Biology'),
+    ('History', 'Ancient, Modern, World History');
+
+//-------------------------------------
+
+-- Insert data into Student table
+INSERT INTO Student (Student_Name, Student_Notes)
+VALUES
+    ('John Doe', 'Excellent in Math'),
+    ('Jane Smith', 'Enjoys Science subjects'),
+    ('Michael Johnson', 'History enthusiast');
+
+//-------------------------------------
+
+-- Insert data into Courses table
+INSERT INTO Courses (Institute_Id, Subject_Id, Student_Id, Start_Date, End_Date, Course_Type, Hourly_Rate, Student_Name, Student_Notes, Course_Duration, Total)
+VALUES
+    (1, 1, 1, '2023-07-01', '2023-12-31', 'Regular', 25.00, 'John Doe', 'Mathematics course', 150.0, 3750.00),
+    (2, 2, 2, '2023-08-15', '2023-11-15', 'Intensive', 30.00, 'Jane Smith', 'Science course', 90.0, 2700.00),
+    (3, 3, 3, '2023-09-01', '2023-10-15', 'Regular', 20.00, 'Michael Johnson', 'History course', 75.0, 1500.00);
+
+//-------------------------------------
+
+-- Insert data into Payments table
+INSERT INTO Payments (Institute_Id, Payment_Date, Payment_Amount)
+VALUES
+    (1, '2023-07-15', 1500.00),
+    (2, '2023-08-20', 2000.00),
+    (3, '2023-09-10', 800.00);
+
+//-------------------------------------
+
+SELECT * FROM Institutes;
+
+//-------------------------------------
+
+Get All Subjects: 
+SELECT * FROM Subjects;
+
+//------------------------------------- 
+
+Get All Courses: 
+SELECT * FROM Courses;
+
+//-------------------------------------
+
+Get All Students:
+SELECT * FROM Student;
+
+//-------------------------------------
+
+Get All Payments:
+SELECT * FROM Payments;
+
+//-------------------------------------
+
+retrieve payments based on the provided institute name
+
+SELECT p.Payment_Id, i.Institute_Name, p.Payment_Date, p.Payment_Amount
+FROM Payments p
+JOIN Institutes i ON p.Institute_Id = i.Institute_Id
+WHERE i.Institute_Name = 'Provided Institute Name';
+
+//-------------------------------------
+
+retrieve payments grouped by institute name along with the total amount for each institute
+SELECT i.Institute_Name, SUM(p.Payment_Amount) AS Total_Amount
+FROM Payments p
+JOIN Institutes i ON p.Institute_Id = i.Institute_Id
+GROUP BY i.Institute_Name;
+
+//-------------------------------------
+
+retrieve sessions depending on a specific course ID
+
+SELECT *
+FROM Sessions
+WHERE Course_Id = Your_Course_ID;
+
+//-------------------------------------
+
+
+updating the Sessions_Number, Course_Duration, and Total columns in the Courses table when adding a new session
+
+UPDATE Courses
+SET Sessions_Number = Sessions_Number + 1,
+    Course_Duration = Course_Duration + (SELECT Duration FROM Sessions WHERE Course_Id = Your_Course_Id AND Session_Id = Your_New_Session_Id),
+    Total = (Course_Duration + (SELECT Duration FROM Sessions WHERE Course_Id = Your_Course_Id AND Session_Id = Your_New_Session_Id)) * Hourly_Rate
+WHERE Course_Id = Your_Course_Id;
+
+//-------------------------------------
+
+Update Subjects:
+
+UPDATE Subjects
+SET Subject_Name = 'New Subject Name', Subject_Description = 'New Description'
+WHERE Subject_Id = Your_Subject_Id;
+
+//-------------------------------------
+
+Update Courses:
+
+UPDATE Courses
+SET Hourly_Rate = New_Hourly_Rate, Student_Name = 'New Student Name'
+WHERE Course_Id = Your_Course_Id;
+
+//-------------------------------------
+
+Update Students:
+
+UPDATE Students
+SET Student_Name = 'New Student Name', Student_Notes = 'New Notes'
+WHERE Student_Id = Your_Student_Id;
+
+//-------------------------------------
+
+Update Payments:
+
+UPDATE Payments
+SET Payment_Amount = New_Amount
+WHERE Payment_Id = Your_Payment_Id;
+
+//-------------------------------------
+
+Delete Subjects:
+
+DELETE FROM Subjects
+WHERE Subject_Id = Your_Subject_Id;
+
+//-------------------------------------
+
+Delete Courses:
+
+DELETE FROM Courses
+WHERE Course_Id = Your_Course_Id;
+
+//-------------------------------------
+
+Delete Students:
+
+DELETE FROM Students
+WHERE Student_Id = Your_Student_Id;
+
+//-------------------------------------
