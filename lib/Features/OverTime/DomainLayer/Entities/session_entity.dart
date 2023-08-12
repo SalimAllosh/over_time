@@ -23,6 +23,15 @@ class SessionEntity extends Equatable {
       this.instituteName});
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+        id,
+        studentName,
+        subject,
+        date,
+        duration,
+        hourlyRate,
+        cost,
+        sessionType,
+        instituteName
+      ];
 }

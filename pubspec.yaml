@@ -36,6 +36,12 @@ dependencies:
   bloc: ^8.1.2
   equatable:
   dartz:
+  sqflite: ^2.2.8+4
+  get_it: ^7.6.0
+  shrink_sidemenu: ^2.0.0+2-null-safety
+  liquid_ui: 
+  google_fonts: ^4.0.4
+  
 
 dev_dependencies:
   flutter_test:

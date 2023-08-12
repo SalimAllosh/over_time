@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:over_time/Features/Authentication/blocs/bio_auth_cubit.dart';
+import 'package:over_time/Public/HomePage/home_page.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -13,11 +14,20 @@ class AuthPage extends StatelessWidget {
         child: BlocBuilder<BioAuthCubit, BioAuthState>(
           builder: (context, state) {
             if (state is BioAuthWaitingState) {
-              return const Center(
-                child: Image(
-                  image: AssetImage("Assets/Images/Lock.png"),
-                  fit: BoxFit.fill,
-                ),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const Image(
+                    image: AssetImage("Assets/Images/Lock.png"),
+                    fit: BoxFit.fill,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<BioAuthCubit>(context, listen: false)
+                            .authFun();
+                      },
+                      child: Text("Verify"))
+                ],
               );
             }
 
@@ -28,7 +38,7 @@ class AuthPage extends StatelessWidget {
               return Center(child: Text(state.message));
             }
             if (state is BioAuthenticatedState) {
-              return const Center(child: Text("BioAuthenticatedState"));
+              return const HomePage();
             } else {
               return const Text("data");
             }
