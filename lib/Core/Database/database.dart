@@ -33,34 +33,112 @@ class DatabaseHelper {
   Future<Either<Failure, Unit>> _onCreate(Database db, int version) async {
     try {
       await db.execute('''
-      CREATE TABLE session_table (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        student_name TEXT NOT NULL,
-        subject TEXT NOT NULL,
-        session_type TEXT NOT NULL,
-        date TEXT NOT NULL,
-        institute_name TEXT NOT NULL,
-        duration REAL NOT NULL,
-        hourly_rate REAL NOT NULL,
-        cost REAL NOT NULL
+      CREATE TABLE Institutes(
+      Institute_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+      Institute_Name TEXT NOT NULL, 
+      Institute_Location TEXT,
+      Institute_Balance REAL
+    )
+    ''');
+
+      await db.execute('''
+      CREATE TABLE subjects(
+      Subject_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+      Subject_Name TEXT NOT NULL , 
+      Subject_Description TEXT  
       )
     ''');
 
       await db.execute('''
-      INSERT INTO session_table(student_name,subject,session_type,date,institute_name,duration,hourly_rate,cost) VALUES ('salim1','math','online','2023-08-07 14:30:15.000','institute_name',2,10,20)
+      CREATE TABLE Student(
+      Student_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+      Student_Name TEXT NOT NULL , 
+      Student_Notes TEXT  
+      )
+    ''');
 
+      await db.execute('''
+      CREATE TABLE Courses(
+      Course_Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+      Institute_Id INTEGER,
+      Subject_Id INTEGER,
+      Student_Id INTEGER ,
+      Start_Date DATE NOT NULL ,
+      End_Date DATE , 
+      Course_Type TEXT NOT NULL , 
+      Hourly_Rate REAL NOT NULL,
+      Student_Name TEXT NOT NULL , 
+      Student_Notes TEXT ,
+      Course_Duration REAL ,
+      Sessions_Number INTEGER,
+      Total REAL , 
+      FOREIGN KEY (Institute_Id) REFERENCES Institutes(Institute_Id),
+      FOREIGN KEY (Subject_Id) REFERENCES Subjects (Subject_Id),
+      FOREIGN KEY (Student_Id) REFERENCES Student (Student_Id)
+    )
+    ''');
+
+      await db.execute('''
+      CREATE TABLE Payments(
+      Payment_Id INTEGER PRIMARY KEY AUTOINCREMENT,
+      Institute_Id INTEGER,
+      Payment_Date DATE NOT NULL,
+      Payment_Amount REAL NOT NULL , 
+      FOREIGN KEY (Institute_Id) REFERENCES Institutes(Institute_Id)
+      )
+    ''');
+
+      await db.execute('''
+      CREATE TABLE Sessions (
+        Session_Id INTEGER PRIMARY KEY AUTOINCREMENT,
+        Course_Id INTEGER,
+        Duration INTEGER,
+        Session_Date DATE,
+        FOREIGN KEY (Course_Id) REFERENCES Courses (Course_Id)
+      )
+    ''');
+
+      await db.execute('''
+      INSERT INTO Institutes (Institute_Name, Institute_Location, Institute_Balance)
+      VALUES
+          ('ABC Institute', 'City A', 50000.00),
+          ('XYZ Academy', 'City B', 75000.00),
+          ('123 School', 'City C', 30000.00);
+      ''');
+      await db.execute('''
+      INSERT INTO Subjects (Subject_Name, Subject_Description)
+      VALUES
+          ('Mathematics', 'Algebra, Geometry, Calculus'),
+          ('Science', 'Physics, Chemistry, Biology'),
+          ('History', 'Ancient, Modern, World History');
 ''');
       await db.execute('''
-      INSERT INTO session_table(student_name,subject,session_type,date,institute_name,duration,hourly_rate,cost) VALUES ('salim11','math13','Offline','2023-08-07 14:30:15.000','institute_name',2,10,20)
-
+      INSERT INTO Student (Student_Name, Student_Notes)
+      VALUES
+          ('John Doe', 'Excellent in Math'),
+          ('Jane Smith', 'Enjoys Science subjects'),
+          ('Michael Johnson', 'History enthusiast');
 ''');
       await db.execute('''
-      INSERT INTO session_table(student_name,subject,session_type,date,institute_name,duration,hourly_rate,cost) VALUES ('salim1221','math123','online','2023-08-07 14:30:15.000','institute_name',2,10,20)
+     INSERT INTO Courses (Institute_Id, Subject_Id, Student_Id, Start_Date, End_Date, Course_Type, Hourly_Rate, Student_Name, Student_Notes, Course_Duration, Total)
+     VALUES
+        (1, 1, 1, '2023-07-01', '2023-12-31', 'Regular', 25.00, 'John Doe', 'Mathematics course', 150.0, 3750.00),
+        (2, 2, 2, '2023-08-15', '2023-11-15', 'Intensive', 30.00, 'Jane Smith', 'Science course', 90.0, 2700.00),
+        (3, 3, 3, '2023-09-01', '2023-10-15', 'Regular', 20.00, 'Michael Johnson', 'History course', 75.0, 1500.00);
 
 ''');
-      await db.execute('''
-      INSERT INTO session_table(student_name,subject,session_type,date,institute_name,duration,hourly_rate,cost) VALUES ('salim11121','math13','online','2023-08-07 14:30:15.000','institute_name',2,10,20)
 
+      await db.execute('''
+    INSERT INTO Sessions (Course_Id, Duration, Session_Date)
+    VALUES (1 ,3.00, '12-12-2023');
+''');
+
+      await db.execute('''
+INSERT INTO Payments (Institute_Id, Payment_Date, Payment_Amount)
+VALUES
+    (1, '2023-07-15', 1500.00),
+    (2, '2023-08-20', 2000.00),
+    (3, '2023-09-10', 800.00);
 ''');
 
       return right(unit);

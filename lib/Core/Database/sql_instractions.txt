@@ -55,7 +55,15 @@ FOREIGN KEY (Institute_Id) REFERENCES Institutes(Institute_Id)
 );
 
 //------------------------------------
+CREATE TABLE Sessions (
+    Session_Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Course_Id INTEGER,
+    Duration INTEGER,
+    Session_Date DATE,
+    FOREIGN KEY (Course_Id) REFERENCES Courses (Course_Id)
+);
 
+//-----------------------------------
 -- Insert data into Institutes table
 INSERT INTO Institutes (Institute_Name, Institute_Location, Institute_Balance)
 VALUES
@@ -99,6 +107,11 @@ VALUES
     (3, '2023-09-10', 800.00);
 
 //-------------------------------------
+
+INSERT INTO Sessions (Course_Id, Duration, Session_Date)
+VALUES (Your_Course_Id, Your_Duration, '12-12-2023');
+
+//--------------------
 
 SELECT * FROM Institutes;
 
@@ -149,6 +162,16 @@ WHERE Course_Id = Your_Course_ID;
 
 //-------------------------------------
 
+SELECT
+    Institute_Id,
+    DATE_FORMAT(Start_Date, '%Y-%m') AS Month,
+    SUM(Duration) AS Total_Worked_Hours
+FROM Sessions
+WHERE Institute_Id = Your_Institute_Id
+GROUP BY Institute_Id, Month
+ORDER BY Month;
+
+//------------------------------------------------------
 
 updating the Sessions_Number, Course_Duration, and Total columns in the Courses table when adding a new session
 

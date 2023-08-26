@@ -1,4 +1,5 @@
 import 'package:over_time/Features/OverTime/DataLayer/DataSrc/local_database.dart';
+import 'package:over_time/Features/OverTime/DataLayer/Model/session_model.dart';
 import 'package:over_time/Features/OverTime/DomainLayer/Entities/session_entity.dart';
 import 'package:over_time/Core/Failures/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -11,11 +12,14 @@ class SessionRepositoryDL extends SessionRepository {
 
   @override
   Future<Either<Failure, List<SessionEntity>>> getAllSessions() async {
-    String sql = "SELECT * FROM session_table";
+    String sql = "SELECT * FROM Sessions";
 
-    localDatabase.getAllsessions(sql);
-
-    return left(DatabaseFailure());
+    try {
+      List<Session> x = await localDatabase.getAllsessions(sql);
+      return right(x);
+    } catch (e) {
+      return left(DatabaseFailure());
+    }
   }
 
   @override

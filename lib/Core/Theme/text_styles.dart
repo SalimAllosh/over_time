@@ -8,14 +8,14 @@ TextTheme appTextTheme = TextTheme(
     textStyle: TextStyle(
       fontSize: 36,
       fontWeight: FontWeight.bold,
-      color: primaryColor,
+      color: onPrimaryColor,
     ),
   ),
   displayMedium: GoogleFonts.rubik(
     textStyle: TextStyle(
-      fontSize: 26,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
-      color: primaryColor,
+      color: onPrimaryColor,
     ),
   ),
   displaySmall: GoogleFonts.rubik(

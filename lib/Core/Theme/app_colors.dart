@@ -16,12 +16,13 @@ ColorScheme darkScheme = ColorScheme(
 );
 
 Color primaryColor = const Color(0xFFFFC324);
-Color onPrimaryColor = const Color(0xFF000000);
+Color onPrimaryColor = Color.fromARGB(255, 45, 45, 45);
 Color secondaryColor = const Color(0xFFFB8D00);
-Color onSecondaryColor = const Color(0xFFFFFFFF);
+Color onSecondaryColor = const Color(0xFF000000);
 Color errorColor = const Color(0xFFB00020);
 Color onErrorColor = const Color(0xFFFFFFFF);
 Color backgroundColor = const Color(0xFFFEFEFE);
 Color onBackgroundColor = const Color(0xFF000000);
 Color surfaceColor = const Color(0xFF000000);
 Color onSurfaceColor = const Color(0xFFFFFFFF);
+Color background2Color = Color.fromARGB(185, 255, 145, 0);

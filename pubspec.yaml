@@ -41,6 +41,9 @@ dependencies:
   shrink_sidemenu: ^2.0.0+2-null-safety
   liquid_ui: 
   google_fonts: ^4.0.4
+  intl: ^0.17.0
+  data_table_2: ^2.4.2
+  flutter_expandable_fab: ^2.0.0
   
 
 dev_dependencies:

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:over_time/Core/Dependincy%20Injection/dependency_injection.dart';
-import 'package:over_time/Features/OverTime/DomainLayer/UseCases/get_all_sessions.dart';
+import 'package:over_time/Core/DummyData/institute_list.dart';
+import 'package:over_time/Features/OverTime/DomainLayer/UseCases/Session/get_all_sessions.dart';
+import 'package:over_time/Public/Widgets/balance_widget.dart';
+import 'package:over_time/Public/Widgets/institute_table.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
   final GlobalKey<SideMenuState> _endSideMenuKey = GlobalKey<SideMenuState>();
+  final _key = GlobalKey<ExpandableFabState>();
 
   toggleMenu([bool end = false]) {
     if (end) {
@@ -43,14 +48,11 @@ class _HomePageState extends State<HomePage> {
     return SideMenu(
       key: _endSideMenuKey,
       inverse: true, // end side menu
-      background: Colors.green[700],
+      background: Theme.of(context).colorScheme.onPrimary,
       type: SideMenuType.slideNRotate,
-      menu: Padding(
-        padding: const EdgeInsets.only(left: 25.0),
-        child: buildMenu(),
-      ),
-      onChange: (_isOpened) {
-        setState(() => isOpened = _isOpened);
+      menu: buildMenu(context),
+      onChange: (isOpened) {
+        setState(() => isOpened = isOpened);
       },
 
       child: IgnorePointer(
@@ -67,103 +69,106 @@ class _HomePageState extends State<HomePage> {
             title:
                 Text("OverTime", style: Theme.of(context).textTheme.titleLarge),
           ),
-          body: GestureDetector(
-            onHorizontalDragEnd: (_) {
-              toggleMenu(true);
-            },
-            child: Center(
-              child: Text(
-                "data",
-                style: Theme.of(context).textTheme.displaySmall,
+          body: Column(
+            children: [
+              BalanceWidget(balance: 15321),
+              InstetuteTable(institutes: instituteList),
+              ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Generate Report",
+                    style: Theme.of(context).textTheme.displayMedium,
+                  ))
+            ],
+          ),
+          floatingActionButtonLocation: ExpandableFab.location,
+          floatingActionButton: ExpandableFab(
+            type: ExpandableFabType.side,
+            children: [
+              FloatingActionButton.small(
+                heroTag: "null",
+                child: const Icon(Icons.edit),
+                onPressed: () {},
               ),
-            ),
+              FloatingActionButton.small(
+                heroTag: null,
+                child: const Icon(Icons.search),
+                onPressed: () {},
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget buildMenu() {
+  Widget buildMenu(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 50.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          ListTile(
+            onTap: () {},
+            leading: const Icon(Icons.article_outlined, color: Colors.white),
+            title: const Text("Sessions"),
+            textColor: Colors.white,
+            dense: true,
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 22.0,
-                ),
-                SizedBox(height: 16.0),
-                Text(
-                  "Hello, John Doe",
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(height: 20.0),
-              ],
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
+            child: ListTile(
+              onTap: () {},
+              leading: const Icon(Icons.menu_book, color: Colors.white),
+              title: const Text("Courses", overflow: TextOverflow.ellipsis),
+              textColor: Colors.white,
+              dense: true,
             ),
           ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.home, size: 20.0, color: Colors.white),
-            title: const Text("Home"),
-            textColor: Colors.white,
-            dense: true,
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.06),
+            child: ListTile(
+              onTap: () {},
+              leading:
+                  const Icon(Icons.account_box_outlined, color: Colors.white),
+              title: const Text("Students", overflow: TextOverflow.ellipsis),
+              textColor: Colors.white,
+              dense: true,
+            ),
           ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.verified_user,
-                size: 20.0, color: Colors.white),
-            title: const Text("Profile"),
-            textColor: Colors.white,
-            dense: true,
-
-            // padding: EdgeInsets.zero,
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.09),
+            child: ListTile(
+              onTap: () {},
+              leading: const Icon(Icons.book, color: Colors.white),
+              title: const Text("Subjects", overflow: TextOverflow.ellipsis),
+              textColor: Colors.white,
+              dense: true,
+            ),
           ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.monetization_on,
-                size: 20.0, color: Colors.white),
-            title: const Text("Wallet"),
-            textColor: Colors.white,
-            dense: true,
-
-            // padding: EdgeInsets.zero,
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12),
+            child: ListTile(
+              onTap: () {},
+              leading: const Icon(Icons.account_balance_outlined,
+                  color: Colors.white),
+              title: const Text("Institutes", overflow: TextOverflow.ellipsis),
+              textColor: Colors.white,
+              dense: true,
+            ),
           ),
-          ListTile(
-            onTap: () {},
-            leading: const Icon(Icons.shopping_cart,
-                size: 20.0, color: Colors.white),
-            title: const Text("Cart"),
-            textColor: Colors.white,
-            dense: true,
-
-            // padding: EdgeInsets.zero,
-          ),
-          ListTile(
-            onTap: () {},
-            leading:
-                const Icon(Icons.star_border, size: 20.0, color: Colors.white),
-            title: const Text("Favorites"),
-            textColor: Colors.white,
-            dense: true,
-
-            // padding: EdgeInsets.zero,
-          ),
-          ListTile(
-            onTap: () {},
-            leading:
-                const Icon(Icons.settings, size: 20.0, color: Colors.white),
-            title: const Text("Settings"),
-            textColor: Colors.white,
-            dense: true,
-
-            // padding: EdgeInsets.zero,
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+            child: ListTile(
+              onTap: () {},
+              leading: const Icon(Icons.money, color: Colors.white),
+              title: const Text("Payments", overflow: TextOverflow.ellipsis),
+              textColor: Colors.white,
+              dense: true,
+            ),
           ),
         ],
       ),
