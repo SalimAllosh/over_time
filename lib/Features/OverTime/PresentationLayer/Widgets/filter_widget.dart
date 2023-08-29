@@ -5,6 +5,10 @@ class FilterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return DropdownButton(
+      value: "All",
+      onChanged: (value) {},
+      items: const [],
+    );
   }
 }

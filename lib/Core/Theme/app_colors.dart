@@ -15,7 +15,7 @@ ColorScheme darkScheme = ColorScheme(
   onSurface: onSurfaceColor,
 );
 
-Color primaryColor = const Color(0xFFFFC324);
+Color primaryColor = const Color(0xFFFB8D00);
 Color onPrimaryColor = Color.fromARGB(255, 45, 45, 45);
 Color secondaryColor = const Color(0xFFFB8D00);
 Color onSecondaryColor = const Color(0xFF000000);

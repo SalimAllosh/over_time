@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:over_time/Core/Dependincy%20Injection/dependency_injection.dart';
 import 'package:over_time/Core/DummyData/institute_list.dart';
+import 'package:over_time/Core/Route/app_routes.dart';
 import 'package:over_time/Features/OverTime/DomainLayer/UseCases/Session/get_all_sessions.dart';
 import 'package:over_time/Public/Widgets/balance_widget.dart';
 import 'package:over_time/Public/Widgets/institute_table.dart';
@@ -21,30 +22,27 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<SideMenuState> _sideMenuKey = GlobalKey<SideMenuState>();
   final GlobalKey<SideMenuState> _endSideMenuKey = GlobalKey<SideMenuState>();
-  final _key = GlobalKey<ExpandableFabState>();
 
   toggleMenu([bool end = false]) {
     if (end) {
-      final _state = _endSideMenuKey.currentState!;
-      if (_state.isOpened) {
-        _state.closeSideMenu();
+      final state = _endSideMenuKey.currentState!;
+      if (state.isOpened) {
+        state.closeSideMenu();
       } else {
-        _state.openSideMenu();
+        state.openSideMenu();
       }
     } else {
-      final _state = _sideMenuKey.currentState!;
-      if (_state.isOpened) {
-        _state.closeSideMenu();
+      final state = _sideMenuKey.currentState!;
+      if (state.isOpened) {
+        state.closeSideMenu();
       } else {
-        _state.openSideMenu();
+        state.openSideMenu();
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final shit = getAllSessionsUsecase();
-
     return SideMenu(
       key: _endSideMenuKey,
       inverse: true, // end side menu
@@ -71,7 +69,7 @@ class _HomePageState extends State<HomePage> {
           ),
           body: Column(
             children: [
-              BalanceWidget(balance: 15321),
+              const BalanceWidget(balance: 15321),
               InstetuteTable(institutes: instituteList),
               ElevatedButton(
                   onPressed: () {},
@@ -84,15 +82,63 @@ class _HomePageState extends State<HomePage> {
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton: ExpandableFab(
             type: ExpandableFabType.side,
+            distance: MediaQuery.of(context).size.width * 0.2,
             children: [
               FloatingActionButton.small(
-                heroTag: "null",
-                child: const Icon(Icons.edit),
+                heroTag: null,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.add_chart_rounded),
+                    Text(
+                      "session",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 5,
+                      ),
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(AppRoutes.getInsertSessionPage());
+                },
+              ),
+              FloatingActionButton.small(
+                heroTag: null,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.add_to_queue_rounded),
+                    Text(
+                      "Course",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 5,
+                      ),
+                    ),
+                  ],
+                ),
                 onPressed: () {},
               ),
               FloatingActionButton.small(
                 heroTag: null,
-                child: const Icon(Icons.search),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.person_add_alt_1_outlined),
+                    Text(
+                      "Student",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 5,
+                      ),
+                    ),
+                  ],
+                ),
                 onPressed: () {},
               ),
             ],
@@ -107,7 +153,8 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           ListTile(
-            onTap: () {},
+            onTap: () =>
+                Navigator.of(context).pushNamed(AppRoutes.getSessionPage()),
             leading: const Icon(Icons.article_outlined, color: Colors.white),
             title: const Text("Sessions"),
             textColor: Colors.white,
@@ -117,7 +164,9 @@ class _HomePageState extends State<HomePage> {
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.03),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.getCoursePage());
+              },
               leading: const Icon(Icons.menu_book, color: Colors.white),
               title: const Text("Courses", overflow: TextOverflow.ellipsis),
               textColor: Colors.white,

@@ -16,7 +16,6 @@ class _BalanceWidgetState extends State<BalanceWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("asdasdasdasd");
         show = !show;
         setState(() {});
       },
@@ -63,9 +62,9 @@ class _BalanceWidgetState extends State<BalanceWidget> {
     int decimalDigits = decimalSeparatorIndex != -1
         ? numberString.length - decimalSeparatorIndex - 1
         : 0;
-    String maskedFormat = '${'*' * (numberString.length - decimalDigits)}';
+    String maskedFormat = '*' * (numberString.length - decimalDigits);
     if (decimalDigits > 0) {
-      maskedFormat += '.' + '*' * decimalDigits;
+      maskedFormat += '.${'*' * decimalDigits}';
     }
 
     return maskedFormat;
