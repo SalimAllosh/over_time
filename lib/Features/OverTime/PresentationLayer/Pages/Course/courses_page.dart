@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:over_time/Core/DummyData/course_dummy_data.dart';
+import 'package:over_time/Core/Route/app_routes.dart';
 import 'package:over_time/Features/OverTime/DomainLayer/Entities/course_entity.dart';
 
 class CoursesPage extends StatelessWidget {
@@ -12,27 +13,33 @@ class CoursesPage extends StatelessWidget {
       appBar: AppBar(
         title: const Center(child: Text("Courses")),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.75,
-            child: GridView.builder(
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: (1 / 2),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.75,
+              child: GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: (1 / 2),
+                ),
+                itemCount: courses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return gridbuilder(context, index);
+                },
               ),
-              itemCount: courses.length,
-              itemBuilder: (BuildContext context, int index) {
-                return gridbuilder(context, index);
-              },
             ),
-          ),
-          ElevatedButton(onPressed: () {}, child: const Text("Generate Report"))
-        ],
+            ElevatedButton(
+                onPressed: () {}, child: const Text("Generate Report"))
+          ],
+        ),
       ),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(AppRoutes.getInsertCoursePage());
+          },
+          child: const Icon(Icons.add)),
     );
   }
 
@@ -56,7 +63,9 @@ class CoursesPage extends StatelessWidget {
                 context, Icons.book_outlined, "Subject Name botato"),
             rowIconAndLabel(
                 context, Icons.person_outline_outlined, "Student Name botato"),
+            rowIconAndLabel(context, Icons.check_box_outlined, "Status"),
             rowIconAndLabel(context, Icons.date_range_outlined, "Start date "),
+            rowIconAndLabel(context, Icons.date_range_outlined, "End date "),
             rowIconAndLabel(context, Icons.article_outlined, "Course Type"),
             rowIconAndLabel(context, Icons.attach_money, "Hourly Rate"),
             rowIconAndLabel(context, Icons.timer_outlined, "Course Duration"),

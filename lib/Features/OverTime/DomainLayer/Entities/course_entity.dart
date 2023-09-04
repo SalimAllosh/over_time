@@ -14,13 +14,15 @@ class CourseEntity extends Equatable {
   final String? studentNote;
   final double courseDuration;
   final double total;
+  final bool active;
 
-  CourseEntity(
+  const CourseEntity(
       {required this.courseID,
       required this.instituteID,
       required this.subjectID,
       required this.studentID,
       required this.sessionID,
+      required this.active,
       required this.startDate,
       this.endDate,
       required this.courseType,
@@ -38,6 +40,7 @@ class CourseEntity extends Equatable {
         subjectID,
         studentID,
         sessionID,
+        active,
         startDate,
         endDate,
         courseType,

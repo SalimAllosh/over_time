@@ -45,6 +45,7 @@ dependencies:
   data_table_2: ^2.4.2
   flutter_expandable_fab: ^2.0.0
   scroll_snap_list: ^0.9.1
+  dropdown_button2: ^2.1.4
   
 
 dev_dependencies:

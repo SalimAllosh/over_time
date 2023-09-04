@@ -14,20 +14,22 @@ class AuthPage extends StatelessWidget {
         child: BlocBuilder<BioAuthCubit, BioAuthState>(
           builder: (context, state) {
             if (state is BioAuthWaitingState) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const Image(
-                    image: AssetImage("Assets/Images/Lock.png"),
-                    fit: BoxFit.fill,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        BlocProvider.of<BioAuthCubit>(context, listen: false)
-                            .authFun();
-                      },
-                      child: Text("Verify"))
-                ],
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Image(
+                      image: AssetImage("Assets/Images/Lock.png"),
+                      fit: BoxFit.fill,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          BlocProvider.of<BioAuthCubit>(context, listen: false)
+                              .authFun();
+                        },
+                        child: Text("Verify"))
+                  ],
+                ),
               );
             }
 

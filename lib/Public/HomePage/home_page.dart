@@ -64,8 +64,8 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () => toggleMenu(true),
               )
             ],
-            title:
-                Text("OverTime", style: Theme.of(context).textTheme.titleLarge),
+            title: Text("Dash Manager",
+                style: Theme.of(context).textTheme.titleLarge),
           ),
           body: Column(
             children: [
@@ -121,7 +121,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(AppRoutes.getInsertCoursePage());
+                },
               ),
               FloatingActionButton.small(
                 heroTag: null,
