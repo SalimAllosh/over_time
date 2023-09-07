@@ -1,4 +1,4 @@
-import '../../Features/OverTime/DomainLayer/Entities/student_entity.dart';
+import '../../Features/InstituteDash/DomainLayer/Entities/student_entity.dart';
 
 List<StudentEntity> dummyStudentList = [
   StudentEntity(

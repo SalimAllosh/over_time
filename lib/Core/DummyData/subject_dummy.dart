@@ -1,4 +1,4 @@
-import 'package:over_time/Features/OverTime/DomainLayer/Entities/subject_entity.dart';
+import 'package:over_time/Features/InstituteDash/DomainLayer/Entities/subject_entity.dart';
 
 List<SubjectEntity> dummySubjectList = [
   SubjectEntity(

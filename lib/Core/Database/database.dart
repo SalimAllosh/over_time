@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
-import '../../Features/OverTime/DataLayer/Model/session_model.dart';
+import '../../Features/InstituteDash/DataLayer/Model/session_model.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();

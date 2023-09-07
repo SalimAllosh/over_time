@@ -3,7 +3,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:over_time/Core/Dependincy%20Injection/dependency_injection.dart';
 import 'package:over_time/Core/DummyData/institute_list.dart';
 import 'package:over_time/Core/Route/app_routes.dart';
-import 'package:over_time/Features/OverTime/DomainLayer/UseCases/Session/get_all_sessions.dart';
+import 'package:over_time/Features/InstituteDash/DomainLayer/UseCases/Session/get_all_sessions.dart';
 import 'package:over_time/Public/Widgets/balance_widget.dart';
 import 'package:over_time/Public/Widgets/institute_table.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
@@ -86,10 +86,10 @@ class _HomePageState extends State<HomePage> {
             children: [
               FloatingActionButton.small(
                 heroTag: null,
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.add_chart_rounded),
                     Text(
                       "session",
@@ -107,10 +107,10 @@ class _HomePageState extends State<HomePage> {
               ),
               FloatingActionButton.small(
                 heroTag: null,
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.add_to_queue_rounded),
                     Text(
                       "Course",
@@ -128,10 +128,10 @@ class _HomePageState extends State<HomePage> {
               ),
               FloatingActionButton.small(
                 heroTag: null,
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.person_add_alt_1_outlined),
                     Text(
                       "Student",
@@ -142,7 +142,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(AppRoutes.getInsertStudentsPage());
+                },
               ),
             ],
           ),
@@ -155,13 +158,16 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          ListTile(
-            onTap: () =>
-                Navigator.of(context).pushNamed(AppRoutes.getSessionPage()),
-            leading: const Icon(Icons.article_outlined, color: Colors.white),
-            title: const Text("Sessions"),
-            textColor: Colors.white,
-            dense: true,
+          Padding(
+            padding: const EdgeInsets.only(left: 1),
+            child: ListTile(
+              onTap: () =>
+                  Navigator.of(context).pushNamed(AppRoutes.getSessionPage()),
+              leading: const Icon(Icons.article_outlined, color: Colors.white),
+              title: const Text("Sessions"),
+              textColor: Colors.white,
+              dense: true,
+            ),
           ),
           Padding(
             padding:
@@ -180,7 +186,9 @@ class _HomePageState extends State<HomePage> {
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.06),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.getStudentsPage());
+              },
               leading:
                   const Icon(Icons.account_box_outlined, color: Colors.white),
               title: const Text("Students", overflow: TextOverflow.ellipsis),
@@ -192,7 +200,9 @@ class _HomePageState extends State<HomePage> {
             padding:
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.09),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.getSubjectsPage());
+              },
               leading: const Icon(Icons.book, color: Colors.white),
               title: const Text("Subjects", overflow: TextOverflow.ellipsis),
               textColor: Colors.white,
@@ -204,6 +214,18 @@ class _HomePageState extends State<HomePage> {
                 EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12),
             child: ListTile(
               onTap: () {},
+              leading:
+                  const Icon(Icons.watch_later_outlined, color: Colors.white),
+              title: const Text("OverTime", overflow: TextOverflow.ellipsis),
+              textColor: Colors.white,
+              dense: true,
+            ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+            child: ListTile(
+              onTap: () {},
               leading: const Icon(Icons.account_balance_outlined,
                   color: Colors.white),
               title: const Text("Institutes", overflow: TextOverflow.ellipsis),
@@ -213,7 +235,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Padding(
             padding:
-                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.15),
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.18),
             child: ListTile(
               onTap: () {},
               leading: const Icon(Icons.money, color: Colors.white),

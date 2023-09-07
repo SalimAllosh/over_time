@@ -1,4 +1,4 @@
-import 'package:over_time/Features/OverTime/DomainLayer/Entities/institute_entity.dart';
+import 'package:over_time/Features/InstituteDash/DomainLayer/Entities/institute_entity.dart';
 
 List<InstituteEntity> instituteList = [
   InstituteEntity(

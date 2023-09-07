@@ -1,6 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:over_time/Features/OverTime/DomainLayer/Entities/institute_entity.dart';
+import 'package:over_time/Features/InstituteDash/DomainLayer/Entities/institute_entity.dart';
 
 class InstetuteTable extends StatefulWidget {
   const InstetuteTable({super.key, required this.institutes});
@@ -55,20 +55,3 @@ class _InstetuteTableState extends State<InstetuteTable> {
                 .toList()));
   }
 }
-
-
-
-// List<DataRow>.generate(
-//               institutes.length,
-//               (index) => DataRow(
-//                 selected: selectedInstitute.contains(element),
-//                 cells: [
-//                     DataCell(Center(
-//                         child: Text(institutes[index].instituteID.toString()))),
-//                     DataCell(Center(
-//                         child:
-//                             Text(institutes[index].instituteName.toString()))),
-//                     DataCell(Center(
-//                         child: Text(
-//                             institutes[index].instituteBalance.toString()))),
-//                   ]))),
